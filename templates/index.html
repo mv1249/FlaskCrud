@@ -1,0 +1,105 @@
+ {% extends 'base.html' %} {% block body %}
+
+
+
+
+<!-- Form -->
+
+<div class="container my-4 mb-4">
+
+    <h2 style="text-align: center; font-weight: bold;font-size:1.5rem;">Add your Todo's</h2>
+
+    <form action="/" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Todo Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholderaria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Todo Description</label>
+            <input type="text" class="form-control" id="desc" name="desc">
+        </div>
+
+        <div class="col-md-12 text-center">
+            <button id="singlebutton" name="singlebutton" class="btn btn-outline-dark">Submit</button>
+        </div>
+    </form>
+
+</div>
+
+
+<!-- table -->
+
+<div class="container my-4">
+
+
+
+
+
+    {% if allTodo|length==0 %}
+
+    <div class="alert alert-warning" role="alert">
+        <h2 style="text-align: center; font-weight: bold;font-size:1.5rem;">No Todos' Found,Add your First Todo now!</h2>
+    </div>
+
+
+
+
+    {% else %}
+
+
+    <table class="table">
+
+        <h2 style="text-align: center; font-weight: bold;font-size:1.5rem;">Your ToDo's</h2>
+        <thead>
+            <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Time</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+
+            {% for todo in allTodo %}
+            <!-- the reason why i am using loop.index is coz suppose i deleted the 7th record from the database,so while viewing the record the end user will see after 6 there's 8,where's 7?,so instead of using the SNO of the database,we have to use the loop index as shown ↓ -->
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{todo.title}}</td>
+                <td>{{todo.desc}}</td>
+                <td>{{todo.date_created}}</td>
+                <td>
+                    <a href="/update/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Update</a>
+
+                    <a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Delete</a>
+
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+
+
+</div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+
+{% endblock body %}
